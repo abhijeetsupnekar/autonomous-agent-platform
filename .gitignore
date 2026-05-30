@@ -1,17 +1,16 @@
+sam/
+venv/
+.venv/
+
 __pycache__/
 *.pyc
 
 .env
 
-sam/
-venv/
-.venv/
-
-node_modules/
 frontend/node_modules/
-
 frontend/dist/
 
-.vscode/
+.git/
+.gitignore
 
-*.log
+.vscode/
