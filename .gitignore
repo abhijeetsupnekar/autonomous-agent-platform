@@ -1,16 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.*
+
+# Python virtual environments
 sam/
 venv/
 .venv/
 
-__pycache__/
-*.pyc
+# Tree output
+tree.txt
 
-.env
-
+# Secrets
+*_key.txt
+tree.txt
+# Frontend
 frontend/node_modules/
 frontend/dist/
+frontend/.firebase/
 
-.git/
-.gitignore
-
+# VS Code
 .vscode/
+
+# OS
+.DS_Store
+Thumbs.db

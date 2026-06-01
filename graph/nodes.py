@@ -14,7 +14,14 @@ from shared.mcp_client import (
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+import os
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY environment variable not set")
+
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 
 def planner_node(state: ShoppingState):
