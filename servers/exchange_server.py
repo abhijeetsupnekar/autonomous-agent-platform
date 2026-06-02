@@ -20,7 +20,7 @@ async def convert_currency(
     """
     Convert an amount from one currency to another.
     """
-
+    print("API KEY:", API_KEY)
     url = (
         f"https://v6.exchangerate-api.com/v6/"
         f"{API_KEY}/pair/"

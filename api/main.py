@@ -1,9 +1,12 @@
+import os
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from graph.workflow import graph
 from fastapi.middleware.cors import CORSMiddleware
 
+print("FASTAPI WEATHER KEY EXISTS:", bool(os.getenv("WEATHER_API_KEY")))
 app = FastAPI(
     title="Shopping MCP Agent API",
     version="1.0.0",

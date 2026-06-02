@@ -9,44 +9,34 @@ load_dotenv(dotenv_path=".env")
 
 mcp = FastMCP("WeatherServer")
 
-API_KEY = os.getenv("WEATHER_API_KEY")
-
-print("API KEY:", API_KEY)
-
 
 @mcp.tool()
 async def get_weather(city: str):
-    """
-    Get current weather information for a city.
-    """
 
-    url = "http://api.weatherapi.com/v1/current.json"
+    api_key = os.getenv("WEATHER_API_KEY")
+
+    url = "https://api.openweathermap.org/data/2.5/weather"
 
     params = {
-        "key": API_KEY,
         "q": city,
+        "appid": api_key,
+        "units": "metric",
     }
 
     async with httpx.AsyncClient() as client:
-
         response = await client.get(url, params=params)
-
-        print(response.text)
         data = response.json()
 
-    if "error" in data:
-        return {"error": data["error"]["message"]}
-
-    current = data["current"]
-    location = data["location"]
+    if response.status_code != 200:
+        return {"error": data.get("message", "Unknown error")}
 
     return {
-        "city": location["name"],
-        "country": location["country"],
-        "temperature_c": current["temp_c"],
-        "condition": current["condition"]["text"],
-        "humidity": current["humidity"],
-        "wind_kph": current["wind_kph"],
+        "city": data["name"],
+        "country": data["sys"]["country"],
+        "temperature_c": data["main"]["temp"],
+        "condition": data["weather"][0]["description"],
+        "humidity": data["main"]["humidity"],
+        "wind_kph": round(data["wind"]["speed"] * 3.6, 2),
     }
 
 

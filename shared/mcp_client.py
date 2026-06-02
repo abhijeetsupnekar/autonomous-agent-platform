@@ -8,20 +8,38 @@ SERVER_PARAMS = StdioServerParameters(
     command="python",
     args=["-m", "servers.product_server"],
 )
+
+import os
+
+COMMON_ENV = {
+    **os.environ,
+    "WEATHER_API_KEY": os.getenv("WEATHER_API_KEY", ""),
+    "EXCHANGE_API_KEY": os.getenv("EXCHANGE_API_KEY", ""),
+    "GEMINI_API_KEY": os.getenv("GEMINI_API_KEY", ""),
+}
+
+print("MCP_CLIENT WEATHER:", os.getenv("WEATHER_API_KEY"))
+print("COMMON_ENV WEATHER:", COMMON_ENV.get("WEATHER_API_KEY"))
+
 SERVER_REGISTRY = {
     "product": StdioServerParameters(
         command="python",
         args=["-m", "servers.product_server"],
+        env=COMMON_ENV,
     ),
     "weather": StdioServerParameters(
         command="python",
         args=["-m", "servers.weather_server"],
+        env=COMMON_ENV,
     ),
     "exchange": StdioServerParameters(
         command="python",
         args=["-m", "servers.exchange_server"],
+        env=COMMON_ENV,
     ),
 }
+
+print("COMMON_ENV WEATHER:", bool(COMMON_ENV.get("WEATHER_API_KEY")))
 
 
 async def get_available_tools():
